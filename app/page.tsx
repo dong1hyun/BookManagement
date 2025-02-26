@@ -3,6 +3,7 @@
 import BookList from "@/components/BookList";
 import ErrorMessage from "@/components/Error";
 import PagenationButtons from "@/components/PagenationButtons";
+import SearchBar from "@/components/SearchBar";
 import { getBooks } from "@/lib/book";
 import { BookType, ParamsType } from "@/types/book";
 import { useEffect, useState } from "react";
@@ -40,6 +41,11 @@ export default function Home() {
 
   return (
     <div>
+      <SearchBar
+        filterHandler={(filterType, filterValue) => {
+          setParams((prev) => ({ ...prev, filterType, filterValue }))
+        }}
+      />
       <ErrorMessage message={error} />
       <BookList books={books} isLoading={isLoading} />
       <PagenationButtons

@@ -1,5 +1,5 @@
 import generatePageButtons from "@/util/pagenation"
-import { useEffect, useMemo } from "react"
+import { useMemo } from "react"
 
 interface Props {
     pageNumberHandler: (v: number) => void
@@ -12,14 +12,15 @@ export default function PagenationButtons({ pageNumberHandler, totalPageNumber, 
         return generatePageButtons(curPageNumber, totalPageNumber);
     }, [totalPageNumber, curPageNumber]);
 
-    if(totalPageNumber === 0) return null;
+    if (totalPageNumber === 0) return null;
     return (
         <div className="flex gap-5">
             {pageButtonList.map((number) => (
                 <button
                     key={number}
                     onClick={() => pageNumberHandler(number)}
-                >{number}</button>
+                >{number}
+                </button>
             ))}
         </div>
     )

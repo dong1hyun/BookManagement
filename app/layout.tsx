@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="h-screen w-screen flex justify-center">
+        <div className="h-screen w-screen flex justify-center pt-[10%]">
           {children}
         </div>
       </body>

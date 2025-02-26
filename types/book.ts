@@ -4,7 +4,7 @@ export interface BookType {
     author: string
 }
 
-type FilterType = "title" | "author" | "None";
+export type FilterType = "title" | "author" | "None";
 
 export interface ParamsType {
     filterType: FilterType
