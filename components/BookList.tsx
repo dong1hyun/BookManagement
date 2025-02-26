@@ -4,8 +4,8 @@ import { addBook } from "@/lib/book";
 import { BookType } from "@/types/book";
 import Loading from "./Loading";
 
-export default function BookList({ books }: { books: BookType[] | [] }) {
-    if(books.length === 0) return <Loading />
+export default function BookList({ books, isLoading }: { books: BookType[] | [], isLoading: boolean }) {
+    if(isLoading) return <Loading />
     return (
         <div>
             {books.map((book) => {

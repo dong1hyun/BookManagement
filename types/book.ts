@@ -9,5 +9,6 @@ type FilterType = "title" | "author" | "None";
 export interface ParamsType {
     filterType: FilterType
     filterValue: string
-    pageNumber: number
+    curPageNumber: number
+    totalPageNumber: number
 }
