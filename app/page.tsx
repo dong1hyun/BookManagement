@@ -40,7 +40,7 @@ export default function Home() {
   }, [params.curPageNumber, params.filterType, params.filterValue]);
 
   return (
-    <div>
+    <div className="relative max-w-[800px] h-[500px] mt-[100px] p-5">
       <SearchBar
         filterHandler={(filterType, filterValue) => {
           setParams((prev) => ({ ...prev, filterType, filterValue }))
