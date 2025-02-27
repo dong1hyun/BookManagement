@@ -13,18 +13,16 @@ import { editBook } from "@/lib/editBook";
 
 export default function AddBookForm() {
     const { id } = useParams();
-    const [book, setBook] = useState<BookFormType | null>();
     const [error, setError] = useState<string | null>(null);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<BookFormType>();
-    if (id) {
-        useEffect(() => {
+    useEffect(() => {
+        if (id) {
             async function fetchBook() {
                 try {
                     if (id) {
                         setIsLoading(true);
                         const book = await getBook(+id);
                         console.log(book)
-                        setBook(book);
                         reset({
                             title: book?.title,
                             author: book?.author,
@@ -44,14 +42,14 @@ export default function AddBookForm() {
             }
 
             fetchBook();
-        }, [id]);
-    }
+        }
+    }, [id, reset]);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const onValid = async (bookData: BookFormType) => {
         try {
             setIsLoading(true);
-            if(id) {
+            if (id) {
                 await editBook(+id, bookData);
                 router.push(`/book/${id}`);
             } else {
@@ -70,6 +68,7 @@ export default function AddBookForm() {
             onSubmit={handleSubmit(onValid)}
             className="flex flex-col gap-5"
         >
+            <ErrorMessage message={error} />
             <div>
                 <InputWithLabel
                     label="책 제목"
