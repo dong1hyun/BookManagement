@@ -22,7 +22,6 @@ export default function BookDetail() {
                     setIsLoading(true);
                     const book = await getBook(+id);
                     setBook(book);
-                    setIsLoading(false);
                 }
             } catch (error) {
                 if (error instanceof Error) {
@@ -36,13 +35,13 @@ export default function BookDetail() {
         fetchBook();
     }, [id]);
     return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+        <div className="p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
             <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">책 정보</h2>
             <ErrorMessage message={error} />
             {
                 isLoading ?
                     <Loading /> :
-                    <div className="grid grid-cols-2 gap-10 text-gray-700">
+                    <div className="flex flex-col md:grid md:grid-cols-2 gap-10 text-gray-700">
                         <BookInfoItem label="고유번호" value={bookId} />
                         <BookInfoItem label="출판사" value={book?.publisher} />
                         <BookInfoItem label="제목" value={book?.title} />

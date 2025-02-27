@@ -6,7 +6,7 @@ import PagenationButtons from "@/components/booksContainer/PagenationButtons";
 import SearchBar from "@/components/booksContainer/SearchBar";
 import { getBooks } from "@/lib/bookList";
 import { BookBasicType, ParamsType } from "@/types/book";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function BooksContainer() {
     const [params, setParams] = useState<ParamsType>({
@@ -19,25 +19,24 @@ export default function BooksContainer() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        async function fetchBooks() {
-            try {
-                setIsLoading(true);
-                const { books, totalPageNumber } = await getBooks(params);
-                setIsLoading(false);
-                setBooks(books);
-                setTotalPageNumber(totalPageNumber);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                }
-            } finally {
-                setIsLoading(false);
+    const fetchBooks = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            const { books, totalPageNumber } = await getBooks(params);
+            setBooks(books);
+            setTotalPageNumber(totalPageNumber);
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message);
             }
-        };
-
-        fetchBooks();
+        } finally {
+            setIsLoading(false);
+        }
     }, [params]);
+
+    useEffect(() => {
+        fetchBooks();
+    }, [fetchBooks]);
     return (
         <>
             <SearchBar

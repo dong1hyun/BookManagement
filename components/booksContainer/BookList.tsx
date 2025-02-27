@@ -12,7 +12,7 @@ export default function BookList({ books, isLoading }: { books: BookBasicType[] 
                 return (
                     <Link
                         href={`book/${book.id}`}
-                        className="flex flex-col justify-center items-center shadow-xl bg-white p-2 rounded-xl w-[100px] hover:scale-110"
+                        className="flex flex-col justify-center items-center shadow-xl bg-white p-2 rounded-xl w-[100px] hover:scale-110 text-center"
                         key={book.id}
                     >
                         <div className="border-b">{book.title}</div>
