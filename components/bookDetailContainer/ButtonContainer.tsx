@@ -29,7 +29,7 @@ export default function ButtonContainer() {
         <div className="flex flex-col items-center gap-3">
             <ErrorMessage message={error} />
             <div className="flex gap-10">
-                <Button style="bg-blue-500" onClick={() => { }}>수정</Button>
+                <Button style="bg-blue-500" onClick={() => { router.push(`/book/${id}/edit`) }}>수정</Button>
                 {isLoading ? <Loading /> : <Button style="bg-red-500" onClick={onDelete}>삭제</Button>}
             </div>
 

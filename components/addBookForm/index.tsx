@@ -3,21 +3,61 @@
 import ErrorMessage from "@/components/common/Error";
 import InputWithLabel from "@/components/common/InputWithLabel";
 import { BookFormType } from "@/types/book";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Loading from "../common/Loading";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { addBook } from "@/lib/addBook";
+import { getBook } from "@/lib/bookDetail";
+import { editBook } from "@/lib/editBook";
 
 export default function AddBookForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm<BookFormType>();
+    const { id } = useParams();
+    const [book, setBook] = useState<BookFormType | null>();
+    const [error, setError] = useState<string | null>(null);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<BookFormType>();
+    if (id) {
+        useEffect(() => {
+            async function fetchBook() {
+                try {
+                    if (id) {
+                        setIsLoading(true);
+                        const book = await getBook(+id);
+                        console.log(book)
+                        setBook(book);
+                        reset({
+                            title: book?.title,
+                            author: book?.author,
+                            publisher: book?.publisher,
+                            salesVolume: book?.salesVolume,
+                            availableCopies: book?.availableCopies
+                        });
+                        setIsLoading(false);
+                    }
+                } catch (error) {
+                    if (error instanceof Error) {
+                        setError(error.message);
+                    }
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+
+            fetchBook();
+        }, [id]);
+    }
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const onValid = async (bookData: BookFormType) => {
         try {
             setIsLoading(true);
-            await addBook(bookData);
-            router.push("/");
+            if(id) {
+                await editBook(+id, bookData);
+                router.push(`/book/${id}`);
+            } else {
+                await addBook(bookData);
+                router.push("/");
+            }
         } catch (error) {
             console.error(error);
         }
@@ -95,7 +135,7 @@ export default function AddBookForm() {
             {
                 isLoading ?
                     <Loading /> :
-                    <button className="w-full bg-cyan-200 p-2 rounded-xl">추가</button>}
+                    <button className="w-full bg-cyan-200 p-2 rounded-xl">{id ? "수정" : "추가"}</button>}
         </form>
     )
 };
