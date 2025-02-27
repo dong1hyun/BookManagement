@@ -45,7 +45,7 @@ async function fetchBooks(params: ParamsType) {
 export async function getBooks(params: ParamsType) {
     try {
         const getCachedBooks = nextCache(fetchBooks, [`page-${params.curPageNumber}`], {
-            tags: [`page-${params.curPageNumber}`],
+            tags: ['book', `page-${params.curPageNumber}`],
             revalidate: 20
         });
 
@@ -56,15 +56,4 @@ export async function getBooks(params: ParamsType) {
         console.error(error);
         throw error;
     }
-}
-
-
-export const addBook = async () => {
-    await db.book.create({
-        data: {
-            title: "test",
-            author: "lim",
-            summary: "good",
-        }
-    })
 }

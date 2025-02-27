@@ -1,10 +1,9 @@
 "use client"
 
-import { addBook } from "@/lib/book";
-import { BookType } from "@/types/book";
-import Loading from "./Loading";
+import { BookBasicType } from "@/types/book";
+import Loading from "../common/Loading";
 
-export default function BookList({ books, isLoading }: { books: BookType[] | [], isLoading: boolean }) {
+export default function BookList({ books, isLoading }: { books: BookBasicType[] | [], isLoading: boolean }) {
     if (isLoading) return <Loading />
     return (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10 py-10 px-5 max-h-[400px] overflow-y-auto">
