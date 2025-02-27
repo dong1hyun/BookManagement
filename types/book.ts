@@ -18,5 +18,4 @@ export interface ParamsType {
     filterType: FilterType
     filterValue: string
     curPageNumber: number
-    totalPageNumber: number
 }

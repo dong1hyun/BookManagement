@@ -13,8 +13,8 @@ export default function BooksContainer() {
         filterType: "None",
         filterValue: "",
         curPageNumber: 1,
-        totalPageNumber: 0
     });
+    const [totalPageNumber, setTotalPageNumber] = useState(0);
     const [books, setBooks] = useState<BookBasicType[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -26,7 +26,7 @@ export default function BooksContainer() {
                 const { books, totalPageNumber } = await getBooks(params);
                 setIsLoading(false);
                 setBooks(books);
-                setParams((prev) => ({ ...prev, totalPageNumber }));
+                setTotalPageNumber(totalPageNumber);
             } catch (error) {
                 if (error instanceof Error) {
                     setError(error.message);
@@ -37,7 +37,7 @@ export default function BooksContainer() {
         };
 
         fetchBooks();
-    }, [params.curPageNumber, params.filterType, params.filterValue]);
+    }, [params]);
     return (
         <>
             <SearchBar
@@ -51,7 +51,7 @@ export default function BooksContainer() {
                 pageNumberHandler={(v) =>
                     setParams((prev) => ({ ...prev, curPageNumber: v }))
                 }
-                totalPageNumber={params.totalPageNumber}
+                totalPageNumber={totalPageNumber}
                 curPageNumber={params.curPageNumber}
             />
         </>

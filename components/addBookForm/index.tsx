@@ -16,7 +16,7 @@ export default function AddBookForm() {
     const onValid = async (bookData: BookFormType) => {
         try {
             setIsLoading(true);
-            const response = await addBook(bookData);
+            await addBook(bookData);
             router.push("/");
         } catch (error) {
             console.error(error);
