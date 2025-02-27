@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Loading from "../common/Loading";
 import { useRouter } from "next/navigation";
+import { addBook } from "@/lib/addBook";
 
 export default function AddBookForm() {
     const { register, handleSubmit, formState: { errors } } = useForm<BookFormType>();
@@ -15,6 +16,7 @@ export default function AddBookForm() {
     const onValid = async (bookData: BookFormType) => {
         try {
             setIsLoading(true);
+            const response = await addBook(bookData);
             router.push("/");
         } catch (error) {
             console.error(error);
