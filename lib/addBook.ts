@@ -4,7 +4,7 @@ import { BookFormType } from "@/types/book"
 import db from "./db"
 import { revalidateTag } from "next/cache";
 
-export const addBook = async (bookData: BookFormType) => {
+export async function addBook(bookData: BookFormType) {
     try {
         await db.book.create({
             data: {
