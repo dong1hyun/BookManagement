@@ -22,7 +22,6 @@ export default function AddBookForm() {
                     if (id) {
                         setIsLoading(true);
                         const book = await getBook(+id);
-                        console.log(book)
                         reset({
                             title: book?.title,
                             author: book?.author,
